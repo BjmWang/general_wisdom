@@ -62,14 +62,3 @@ class World:
         self.SuccessRates.append(rate)
         dd = d/float(self.N) # normalize by N to get the price
         self.Prices.append(self.Prices[-1] + dd) # update the price
-
-    def collect_strgy_score(self):
-        counts = [ [] for _ in range(2**(2**self.m))]
-        scores = [ [] for _ in range(2**(2**self.m))]
-        #...
-        for a in self.Agents:
-            for s in a.Strgies:
-                g = int(s.strgy, 2)
-                counts[g].append(s.count)
-                scores[g].append(s.score)
-        return array(counts), array(scores)
