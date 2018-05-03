@@ -6,7 +6,9 @@ from numpy import *
 from minoritygame import *
 fig = figure(1, figsize=(6,4))
 
-T,N,m = 200,19,2
+N,m = 49,2
+T = 1000*(2**m)
+
 
 def collect_strgy_score(wld, counts, scores):
     for a in wld.Agents:
@@ -14,19 +16,25 @@ def collect_strgy_score(wld, counts, scores):
             g = int(s.strgy, 2)
             counts[g].append(s.count)
             scores[g].append(s.score)
-    return array(counts), array(scores)
+    return nan_to_num(array(counts)), nan_to_num(array(scores))
 
 
-for t in range(20):
-    counts = [ [] for _ in range(2**(2**m))]
-    scores = [ [] for _ in range(2**(2**m))]
-    if t%100==0: print(t)
+all_score_list = []
+all_count_list = []
+for t in range(40):
+    counts = [[] for _ in range(2**(2**m))]
+    scores = [[] for _ in range(2**(2**m))]
+    if t%10 == 0: print(t)
     sim = World(T=T, N=N, m=m, s=2)
     sim.act()
     collect_strgy_score(sim, counts, scores)
-    for x in scores:
-        print(mean(x), std(x))
-    print('\n')
-    #for x in counts:
-        # print(mean(x), std(x))
-    #print('\n')
+    clist = [abs(mean(c)) for c in counts]
+    all_count_list.append(max(clist))
+    slist = [abs(mean(s)) for s in scores]
+    all_score_list.append(max(slist))
+
+print(all_score_list)
+subplot(211); plot(sort(all_count_list), '.-')
+subplot(212); semilogy(sort(all_score_list), '.-')
+savefig('count_score.jpg')
+show()
