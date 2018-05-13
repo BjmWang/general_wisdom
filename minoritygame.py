@@ -1,16 +1,17 @@
 #  !/usr/bin/env python
 #  -*- coding:utf-8 -*-
+
 from numpy import *
 
 class Strgy:
     def __init__(self, m=4):
         self.score = 0 # Strategy's initial score
-        self.strgy = ''.join(str(random.randint(2)) for _ in range(2**m))
+        self.rules = ''.join(str(random.randint(2)) for _ in range(2**m))
         self.count = 0 # how many times this strategy has been used?
 
     def act(self, state): # act according to the current state (the global info)
         self.count += 1
-        return sign(int(self.strgy[state], 2)-0.5)
+        return sign(int(self.rules[state], 2)-0.5)
 
     def update(self, v):
         self.score += v # update the score by adding v to it

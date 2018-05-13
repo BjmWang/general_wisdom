@@ -5,9 +5,9 @@ from pylab import *
 from numpy import *
 from minoritygame import *
 
+K = 400
 N = [5,11,21,41,81,151,301]
-s = 2
-m = 2
+s, m = 2, 2
 T = (2**m)*1000
 
 def collect_strgy_score(wld, m):
@@ -21,7 +21,7 @@ def collect_strgy_score(wld, m):
     return nan_to_num(array(counts)), nan_to_num(array(scores))
 
 
-for k in range(100):
+for k in range(K):
     print(datetime_str(), k)
     for n in N:
         print('\t', n)
